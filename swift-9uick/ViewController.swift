@@ -16,6 +16,11 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
     var cnt = 0
     var text = ""
     
+    let hitokoto: [String] = ["⭐️忘れないようにメモしよう", "⭐️頭の中を整理するためにメモしよう", "⭐️TODOリストを作ってみよう"]
+
+    
+    @IBOutlet weak var hitokotoLabel: UILabel!
+    
     @IBOutlet weak var targetView: UIView!
     
     override func viewDidLoad() {
@@ -31,6 +36,9 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
         targetView.layer.shadowOpacity = 0.4
         targetView.layer.shadowRadius = 3
         self.tabBarController?.delegate = self
+        
+        let value = hitokoto.randomElement()
+        hitokotoLabel.text = value
 
     }
     

@@ -15,7 +15,7 @@ struct Provider: IntentTimelineProvider {
         let storeData = StoreData(showText: "-")
         return SimpleEntry(storeData : storeData, configuration: ConfigurationIntent())
     }
-
+    
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         guard let storeData = try? JSONDecoder().decode(StoreData.self, from: primaryData) else {
             return
@@ -23,12 +23,12 @@ struct Provider: IntentTimelineProvider {
         let entry = SimpleEntry(storeData: storeData, configuration: configuration)
         completion(entry)
     }
-
+    
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         guard let primaryData = UserDefaults(suiteName: "group.isseiueda")?.data(forKey: "swift-9uick") else { return }
         
         guard let storeData = try? JSONDecoder().decode(StoreData.self, from: primaryData) else {
-          return
+            return
         }
         let entry = SimpleEntry(storeData: storeData, configuration: configuration)
         
@@ -45,25 +45,72 @@ struct SimpleEntry: TimelineEntry {
 
 struct WidgetExtensionEntryView : View {
     var entry: Provider.Entry
-
+    
+    @Environment(\.widgetFamily) var widgetFamily
+    
+    
     var body: some View {
-        ZStack{
-            Color(red: 255 / 255, green: 253 / 255, blue: 152 / 255)
+        switch widgetFamily {
+        case .systemSmall:
+            ZStack{
+                Color(red: 255 / 255, green: 253 / 255, blue: 152 / 255)
+                Text(entry.storeData.showText)
+                    .foregroundColor(.black)
+                    .padding(15)
+                    .lineSpacing(5)
+            }
+        case .systemMedium:
+            ZStack{
+                Color(red: 255 / 255, green: 253 / 255, blue: 152 / 255)
+                Text(entry.storeData.showText)
+                    .foregroundColor(.black)
+                    .padding(15)
+                    .lineSpacing(5)
+            }
+        case .systemLarge:
+            ZStack{
+                Color(red: 255 / 255, green: 253 / 255, blue: 152 / 255)
+                Text(entry.storeData.showText)
+                    .foregroundColor(.black)
+                    .padding(15)
+                    .lineSpacing(5)
+            }
+        case .accessoryRectangular:
             Text(entry.storeData.showText)
                 .foregroundColor(.black)
+                .font(Font.system(size: 17))
+//                .environment(\.sizeCategory, .large)
+        case .accessoryInline:
+            Text(entry.storeData.showText)
+                .foregroundColor(.black)
+                .environment(\.sizeCategory, .large)
+        default:
+            EmptyView()
         }
+        //        ZStack{
+        //            Color(red: 255 / 255, green: 253 / 255, blue: 152 / 255)
+        //            Text(entry.storeData.showText)
+        //                .foregroundColor(.black)
+        //        }
     }
 }
 
 struct WidgetExtension: Widget {
     let kind: String = "WidgetExtension"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             WidgetExtensionEntryView(entry: entry)
         }
         .configurationDisplayName("9uick")
         .description("まるで付箋のようなウィジェット")
+        .supportedFamilies([
+            .systemLarge,
+            .systemMedium,
+            .systemSmall,
+            .accessoryRectangular,
+            .accessoryInline
+        ])
     }
 }
 

@@ -15,11 +15,13 @@ class AboutAppViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var finishButton: UIButton!
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let baseString = "◯ 動画でのウィジェット追加手順はこちら"
-        let baseString2 = "◯ 動画での9uickの使い方はこちら"
+        let baseString = "動画でのウィジェット追加方法はこちら"
+        let baseString2 = "動画での9uickの使い方はこちら"
 
         let attributedString = NSMutableAttributedString(string: baseString)
         let attributedString2 = NSMutableAttributedString(string: baseString2)
@@ -99,7 +101,7 @@ class AboutAppViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func toback(_ sender: Any) {
         
-        let alert = UIAlertController(title: "終了しますか？", message: "終了した後でも確認することができます", preferredStyle: .alert)
+        let alert = UIAlertController(title: "終了しますか？", message: "チュートリアルは終了した後でも確認することができます", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default) { (action) in
             self.dismiss(animated: true, completion: nil)
         }

@@ -12,6 +12,7 @@ class ContentViewController: UIViewController, UITextViewDelegate {
     var saveArray:  [String] = []
     var dateArray:  [String] = []
 
+
     @IBOutlet weak var memoTextView: UITextView!
     
     var text = ""
