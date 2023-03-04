@@ -17,7 +17,7 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
     var text = ""
     
     let hitokoto: [String] = ["⭐️忘れないようにメモしよう", "⭐️頭の中を整理するためにメモしよう", "⭐️TODOリストを作ってみよう"]
-
+    
     
     @IBOutlet weak var hitokotoLabel: UILabel!
     
@@ -39,7 +39,7 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
         
         let value = hitokoto.randomElement()
         hitokotoLabel.text = value
-
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,7 +62,7 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
         if cnt < pallet.count {
             cnt += 1
             let contentVC = storyboard?.instantiateViewController(withIdentifier: "ContentViewController") as! ContentViewController
-
+            
             // PageViewControllerにViewControllerをセット
             self.pageViewController?.setViewControllers([contentVC], direction: .forward, animated: true,completion: nil)
         } else {
@@ -70,7 +70,7 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
             let contentVC = storyboard?.instantiateViewController(withIdentifier: "ContentViewController") as! ContentViewController
             // PageViewControllerにViewControllerをセット
             self.pageViewController?.setViewControllers([contentVC], direction: .forward, animated: true,completion: nil)
-
+            
         }
     }
     
@@ -96,7 +96,7 @@ extension ViewController: UIPageViewControllerDataSource, UIPageViewControllerDe
         let contentVC = storyboard.instantiateViewController(withIdentifier: "ContentViewController") as! ContentViewController
         
         cnt += 1
-
+        
         if cnt == 0 {
             print("0です")
         }
@@ -106,8 +106,8 @@ extension ViewController: UIPageViewControllerDataSource, UIPageViewControllerDe
     
     func pageViewController(_: UIPageViewController, willTransitionTo: [UIViewController]) {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
-
+        
         UserDefaults.standard.set("",forKey: "memo")
-
+        
     }
 }

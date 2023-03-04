@@ -22,7 +22,6 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return sections.count
     }
     
@@ -31,7 +30,6 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         var rows = 0
         if section == 0 {
             rows = usingCell.count

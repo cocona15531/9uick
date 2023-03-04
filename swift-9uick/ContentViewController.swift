@@ -11,14 +11,14 @@ class ContentViewController: UIViewController, UITextViewDelegate {
     
     var saveArray:  [String] = []
     var dateArray:  [String] = []
-
-
+    
+    
     @IBOutlet weak var memoTextView: UITextView!
     
     var text = ""
     var textFieldValuebefore :String = ""
     var textFieldValue :String = ""
-
+    
     
     override func viewDidLoad() {
         
@@ -48,38 +48,22 @@ class ContentViewController: UIViewController, UITextViewDelegate {
         // textViewのキーボードにツールバーを設定
         memoTextView.inputAccessoryView = toolBar
         
-        
-//        if self.saveArray.count == 5 {
-//            self.saveArray.removeLast()
-//            print(saveArray)
-//        }
-//
-//        if self.dateArray.count == 5 {
-//            self.dateArray.removeLast()
-//            print(dateArray)
-//        }
-        
-
-        
         self.saveArray = UserDefaults.standard.stringArray(forKey: "history") ?? []
-
+        
         self.dateArray = UserDefaults.standard.stringArray(forKey: "date") ?? []
-
-
-
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//
         self.saveArray = UserDefaults.standard.stringArray(forKey: "history") ?? []
         self.dateArray = UserDefaults.standard.stringArray(forKey: "date") ?? []
-
     }
-
+    
     
     func storeData(text : String) {
-//        print(text)
         let storedata = StoreData(showText: text)
         let primaryData = PrimaryData(storeData: storedata)
         primaryData.encodeData()
@@ -93,40 +77,32 @@ class ContentViewController: UIViewController, UITextViewDelegate {
             self.saveArray.removeFirst()
             print("呼ばれました")
         }
-
+        
         if self.dateArray.count >= 30 {
             self.dateArray.removeFirst()
         }
         
         textFieldValuebefore = memoTextView.text
-
+        
         textFieldValue = textFieldValuebefore.replacingOccurrences(of: "\n", with: "｜")
-
+        
         print(textFieldValue)
         
         if saveArray.contains(textFieldValue) {
             return
-
+            
         } else if textFieldValue == "" {
             return
-
+            
         } else {
             saveArray.append("\(textFieldValue)")
             UserDefaults.standard.set(saveArray, forKey: "history")
-
+            
         }
-        
         let df = DateFormatter()
         df.dateFormat = "yyyy/MM/dd HH:mm"
         dateArray.append("\(df.string(from: Date()))")
-//        print("\(df.string(from: Date()))")
         UserDefaults.standard.set(dateArray, forKey: "date")
-
     }
-    
-    //    func textViewDidChange(_ textView: UITextView) {
-    //        let value = UserDefaults.standard.string(forKey: "memo")
-    //        print("押されたよ")
-    //    }
 }
 

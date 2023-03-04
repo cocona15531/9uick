@@ -60,8 +60,6 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        print(self.memoryArrayReversed.count)
-        //        print(saveArray.count)
         return saveArray.count
     }
     
@@ -72,13 +70,11 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let cell = historyTableView.dequeueReusableCell(withIdentifier: "Cell")!
         cell.textLabel?.text = saveArray[indexPath.item]
-        //        cell.textLabel?.numberOfLines=0
         cell.detailTextLabel?.text = "追加日：\(dateArray[indexPath.item])"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "cellSegue",sender: nil) // ←追加する
     }
     
     // セルの削除機能
