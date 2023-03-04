@@ -58,6 +58,7 @@ struct WidgetExtensionEntryView : View {
                     .foregroundColor(.black)
                     .padding(15)
                     .lineSpacing(5)
+//                    .bold()
             }
         case .systemMedium:
             ZStack{
@@ -77,8 +78,12 @@ struct WidgetExtensionEntryView : View {
             }
         case .accessoryRectangular:
             Text(entry.storeData.showText)
-                .foregroundColor(.black)
+                .foregroundColor(.white)
+                .bold()
                 .font(Font.system(size: 17))
+                .lineSpacing(5)
+
+//            Color(red: 255 / 255, green: 255 / 255, blue: 255 / 255)
 //                .environment(\.sizeCategory, .large)
         case .accessoryInline:
             Text(entry.storeData.showText)

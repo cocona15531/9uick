@@ -43,11 +43,6 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        if Auth.auth().currentUser == nil {
-            // ログインしていないときの処理
-//            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
-//            self.present(loginViewController!, animated: true, completion: nil)
-//        }
         let ud = UserDefaults.standard
         let firstLunchKey = "firstLunch"
         if ud.bool(forKey: firstLunchKey) {
@@ -91,27 +86,20 @@ class ViewController: UIViewController, UITabBarDelegate, UITabBarControllerDele
 extension ViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let contentVC = storyboard?.instantiateViewController(withIdentifier: "ContentViewController") as! ContentViewController
-        if 0 < cnt {
-            cnt -= 1
-        }
         
-        return contentVC
+        return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let contentVC = storyboard.instantiateViewController(withIdentifier: "ContentViewController") as! ContentViewController
-        print(contentVC)
         
         cnt += 1
 
         if cnt == 0 {
             print("0です")
         }
-        print(cnt)
-
-//        UserDefaults.standard.set("",forKey: "memo")
         
         return contentVC
     }

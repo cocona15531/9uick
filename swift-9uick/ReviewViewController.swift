@@ -11,11 +11,10 @@ import MessageUI
 
 class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate {
     
-    var sections = ["使い方","レビュー","お問い合わせ","開発者"]
+    var sections = ["使い方","レビュー・お問い合わせ","開発者"]
     var usingCell = ["ウィジェットの追加方法","9uickの使い方"]
-    var reviewCell = ["レビューを書く"]
-    var mailCell = ["お問い合わせ（メール）"]
-    var blogCell = ["開発者のブログ"]
+    var reviewCell = ["レビューを書く","お問い合わせ（メール）"]
+    var blogCell = ["プライバシーポリシー","開発者のブログ"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +38,6 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if section == 1 {
             rows = reviewCell.count
         } else if section == 2 {
-            rows = mailCell.count
-        } else if section == 3 {
             rows = blogCell.count
         }
         return rows
@@ -56,8 +53,6 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if indexPath.section == 1 {
             text = reviewCell[indexPath.row]
         } else if indexPath.section == 2 {
-            text = mailCell[indexPath.row]
-        } else if indexPath.section == 3 {
             text = blogCell[indexPath.row]
         }
         
@@ -91,7 +86,8 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else if #available(iOS 10.3, *) {
                 SKStoreReviewController.requestReview()
             }
-        } else if indexPath == [2,0] {
+            
+        } else if indexPath == [1,1] {
             if MFMailComposeViewController.canSendMail() {
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
@@ -102,26 +98,33 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 print("送信できません")
             }
-        } else if indexPath == [3,0] {
+            
+        } else if indexPath == [2,1] {
             let url = NSURL(string: "https://coconaly.org/")
             if UIApplication.shared.canOpenURL(url! as URL) {
                 UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
             }
+            
+        } else if indexPath == [2,0] {
+            let url = NSURL(string: "https://voracious-sardine-e88.notion.site/Privacy-Policy-f3de77080389420b82871ecc7f55eacb")
+            if UIApplication.shared.canOpenURL(url! as URL) {
+                UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
+            }
+        }
+        
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            switch result {
+            case .cancelled:
+                print("キャンセル")
+            case .saved:
+                print("下書き保存")
+            case .sent:
+                print("送信成功")
+            default:
+                print("送信失敗")
+            }
+            dismiss(animated: true, completion: nil)
         }
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        switch result {
-        case .cancelled:
-            print("キャンセル")
-        case .saved:
-            print("下書き保存")
-        case .sent:
-            print("送信成功")
-        default:
-            print("送信失敗")
-        }
-        dismiss(animated: true, completion: nil)
-    }
 }
-
